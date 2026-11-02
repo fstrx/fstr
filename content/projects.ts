@@ -14,7 +14,7 @@ export const projects: Project[] = [
   {
     name: "Aedura",
     about: "my current startup. ai for education: helping students know what to study next. starting with cbse.",
-    role: "CTO",
+    role: "Co-Founder & CTO",
     status: "building",
     tags: ["ai", "education"],
     link: "https://aedura.in",

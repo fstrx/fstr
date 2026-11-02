@@ -57,9 +57,10 @@ function tokenizeLine(line: string): Token[] {
 
       switch (kind) {
         case "ident":
-          if (KEYWORDS.has(value)) type = "keyword";
+          // `from: "2025-10"` is a key, not the keyword
+          if (/^\s*\??:/.test(rest)) type = "property";
+          else if (KEYWORDS.has(value)) type = "keyword";
           else if (CONSTANTS.has(value)) type = "constant";
-          else if (/^\s*\??:/.test(rest)) type = "property";
           else if (/^\s*\(/.test(rest)) type = "function";
           else if (BUILTIN_TYPES.has(value) || /^[A-Z]/.test(value)) type = "type";
           else type = "plain";

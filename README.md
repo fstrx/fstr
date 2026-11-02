@@ -17,6 +17,7 @@ Everything personal lives in `content/` — components never need touching for u
 | ----------------------- | -------------------------------------------------------------- |
 | `content/site.ts`       | name, location, timezone, email, socials, `updated` date       |
 | `content/projects.ts`   | projects                                                       |
+| `content/experience.ts` | roles, newest first (`to` omitted = current)                   |
 | `content/interests.ts`  | interests, grouped by verb                                     |
 | `content/now.ts`        | the /now snapshot — edit list, bump `updated`                  |
 | `content/listening.ts`  | "on rotation" records                                          |
@@ -44,4 +45,4 @@ No domain is hardcoded. Once you have one, set `NEXT_PUBLIC_SITE_URL` (see `.env
 
 ## Keyboard
 
-`1`–`5` open file · `[` `]` cycle · `j` `k` move line (editor focused) · `:` command line (`:help`).
+`1`–`6` open file · `[` `]` cycle · `j` `k` move line (editor focused) · `:` command line (`:help`).

@@ -1,4 +1,5 @@
 import { ArrowUpRight } from "lucide-react";
+import { experience, fmtMonth } from "@/content/experience";
 import { interests } from "@/content/interests";
 import { now } from "@/content/now";
 import { projects } from "@/content/projects";
@@ -34,7 +35,7 @@ function AboutOutput() {
         <Row label="based">{site.location.toLowerCase()}</Row>
         <Row label="does">student · developer · founder</Row>
         <Row label="currently">
-          <span className="text-accent">cto @ aedura</span>
+          <span className="text-accent">co-founder & cto @ aedura</span>
         </Row>
         <Row label="into">{site.focus.join(" · ")}</Row>
         <Row label="setup">
@@ -79,6 +80,44 @@ function ProjectsOutput() {
         </li>
       ))}
     </ul>
+  );
+}
+
+/** git-log-ish timeline */
+function ExperienceOutput() {
+  return (
+    <ol>
+      {experience.map((r, i) => {
+        const current = !r.to;
+        const last = i === experience.length - 1;
+        return (
+          <li key={`${r.org}-${r.from}`} className="grid grid-cols-[1.25rem_minmax(0,1fr)]">
+            <div aria-hidden className="flex flex-col items-center">
+              <span className={`leading-[1.7] ${current ? "text-accent" : "text-faint"}`}>
+                {current ? "●" : "○"}
+              </span>
+              {!last && <span className="w-px flex-1 bg-line-strong" />}
+            </div>
+            <div className={last ? "" : "pb-5"}>
+              <p className="flex flex-wrap items-baseline gap-x-2">
+                <span className="text-fg">{r.role.toLowerCase()}</span>
+                <span className="text-faint">@</span>
+                <span className="text-fg">{r.org.toLowerCase()}</span>
+              </p>
+              <p className="text-[11.5px] text-muted tabular-nums">
+                <span className={current ? "text-accent" : ""}>
+                  {fmtMonth(r.from)} — {r.to ? fmtMonth(r.to) : "now"}
+                </span>
+                {r.where && <span className="text-faint"> · {r.where}</span>}
+              </p>
+              {r.about && (
+                <p className="mt-1 font-sans text-[13.5px] leading-relaxed text-muted">{r.about}</p>
+              )}
+            </div>
+          </li>
+        );
+      })}
+    </ol>
   );
 }
 
@@ -132,6 +171,9 @@ function SecurityOutput() {
           </a>
         </Row>
         <Row label="lang">en</Row>
+        <Row label="background">
+          bug bounty & security research <span className="text-muted">(2022–23)</span>
+        </Row>
         <Row label="bounty">
           <span className="text-muted">none, but credit if you want it</span>
         </Row>
@@ -151,6 +193,7 @@ function SecurityOutput() {
 export const outputs: Record<FileId, () => React.ReactElement> = {
   about: AboutOutput,
   projects: ProjectsOutput,
+  experience: ExperienceOutput,
   interests: InterestsOutput,
   now: NowOutput,
   security: SecurityOutput,

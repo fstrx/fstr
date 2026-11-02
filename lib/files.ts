@@ -3,12 +3,13 @@
  * Edit /content, not this file — the code below just serializes it.
  */
 
+import { experience } from "@/content/experience";
 import { interests } from "@/content/interests";
 import { now } from "@/content/now";
 import { projects } from "@/content/projects";
 import { activeSocials, site } from "@/content/site";
 
-export const FILE_IDS = ["about", "projects", "interests", "now", "security"] as const;
+export const FILE_IDS = ["about", "projects", "experience", "interests", "now", "security"] as const;
 export type FileId = (typeof FILE_IDS)[number];
 
 export type EditorFile = {
@@ -84,6 +85,33 @@ function projectsSource() {
   ].join("\n");
 }
 
+function experienceSource() {
+  const body = experience.flatMap((r) => {
+    const lines = [`  {`, `    role: ${s(r.role)},`, `    org: ${s(r.org)},`, `    from: ${s(r.from)},`];
+    lines.push(r.to ? `    to: ${s(r.to)},` : `    // to: still here`);
+    if (r.where) lines.push(`    where: ${s(r.where)},`);
+    if (r.about) lines.push(`    about: ${s(r.about)},`);
+    lines.push(`  },`);
+    return lines;
+  });
+
+  return [
+    `// experience.ts`,
+    `// the linkedin version, minus the buzzwords.`,
+    ``,
+    `type Role = {`,
+    `  role: string;`,
+    `  org: string;`,
+    `  from: string;`,
+    `  to?: string;`,
+    `};`,
+    ``,
+    `export const experience: Role[] = [`,
+    ...body,
+    `];`,
+  ].join("\n");
+}
+
 function interestsSource() {
   return [
     `// interests.ts`,
@@ -135,6 +163,7 @@ export function securityTxt() {
 export const files: EditorFile[] = [
   { id: "about", name: "about.ts", path: "src/about.ts", dir: "src", lang: "ts", cursor: 4, source: aboutSource() },
   { id: "projects", name: "projects.ts", path: "src/projects.ts", dir: "src", lang: "ts", cursor: 12, source: projectsSource() },
+  { id: "experience", name: "experience.ts", path: "src/experience.ts", dir: "src", lang: "ts", cursor: 11, source: experienceSource() },
   { id: "interests", name: "interests.ts", path: "src/interests.ts", dir: "src", lang: "ts", cursor: 4, source: interestsSource() },
   { id: "now", name: "now.ts", path: "src/now.ts", dir: "src", lang: "ts", cursor: 5, source: nowSource() },
   {

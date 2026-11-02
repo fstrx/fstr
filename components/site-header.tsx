@@ -53,7 +53,7 @@ export function SiteHeader() {
             href={s.href}
             target={s.id === "email" ? undefined : "_blank"}
             rel="me noopener noreferrer"
-            className="hidden text-muted transition-colors hover:text-fg sm:inline"
+            className="hidden text-muted transition-colors hover:text-fg lg:inline"
           >
             {s.label}
           </a>
