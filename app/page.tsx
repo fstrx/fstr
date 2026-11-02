@@ -2,6 +2,7 @@ import { ConsoleHello } from "@/components/console-hello";
 import { Editor } from "@/components/editor/editor";
 import { Elsewhere } from "@/components/elsewhere";
 import { Hero } from "@/components/hero";
+import { ProjectsIndex } from "@/components/projects-index";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 
@@ -11,6 +12,7 @@ export default function Home() {
       <SiteHeader />
       <main id="main">
         <Hero />
+        <ProjectsIndex />
         <Editor />
         <Elsewhere />
       </main>

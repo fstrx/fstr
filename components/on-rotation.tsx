@@ -14,23 +14,19 @@ function Equalizer() {
   );
 }
 
-/** "currently listening to" — a small spec-sheet style panel */
+/** "currently listening to" — sits in the elsewhere row */
 export function OnRotation() {
   return (
-    <section aria-labelledby="rotation-title" className="relative border border-line">
-      <div className="flex items-center justify-between border-b border-line px-4 py-2.5">
-        <h2 id="rotation-title" className="text-micro uppercase text-muted">
-          on rotation
-        </h2>
-        <span className="flex items-center gap-2 text-micro uppercase text-faint">
-          <Equalizer />
-          listening
+    <div>
+      <h2 id="rotation-title" className="mb-5 flex items-center justify-between text-[12.5px] text-faint">
+        <span>
+          <span className="text-accent">{"//"}</span> on rotation
         </span>
-      </div>
-
-      <ol className="divide-y divide-line">
+        <Equalizer />
+      </h2>
+      <ol aria-labelledby="rotation-title" className="divide-y divide-line border-y border-line">
         {listening.map((t, i) => (
-          <li key={t.album} className="flex items-baseline gap-4 px-4 py-2.5 text-[12.5px]">
+          <li key={t.album} className="flex items-baseline gap-4 py-3 text-[13px]">
             <span className="w-4 text-[10px] text-faint tabular-nums">{String(i + 1).padStart(2, "0")}</span>
             <span className="min-w-0 flex-1 truncate">
               <span className="text-fg">{t.artist.toLowerCase()}</span>
@@ -41,6 +37,6 @@ export function OnRotation() {
           </li>
         ))}
       </ol>
-    </section>
+    </div>
   );
 }

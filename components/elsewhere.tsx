@@ -1,5 +1,6 @@
 import { ArrowUpRight } from "lucide-react";
 import { activeSocials, socials } from "@/content/site";
+import { OnRotation } from "./on-rotation";
 
 export function Elsewhere() {
   const pending = socials.filter((s) => !s.href);
@@ -7,7 +8,7 @@ export function Elsewhere() {
   return (
     <section
       aria-labelledby="elsewhere-title"
-      className="mt-20 grid gap-12 sm:mt-28 md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] md:gap-16"
+      className="mt-20 grid gap-12 sm:mt-28 md:grid-cols-2 md:gap-x-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)_minmax(0,1.1fr)] lg:gap-x-12"
     >
       <div>
         <h2 id="elsewhere-title" className="mb-5 text-[12.5px] text-faint">
@@ -40,7 +41,9 @@ export function Elsewhere() {
         )}
       </div>
 
-      <div>
+      <OnRotation />
+
+      <div className="md:col-span-2 lg:col-span-1">
         <h2 className="mb-5 text-[12.5px] text-faint">
           <span className="text-accent">{"//"}</span> colophon
         </h2>

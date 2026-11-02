@@ -1,19 +1,19 @@
 import { site } from "@/content/site";
-import { OnRotation } from "./on-rotation";
+import { AsciiTorus } from "./ascii-torus";
+import { DecodeText } from "./decode-text";
 
 export function Hero() {
   return (
     <section
       aria-labelledby="hello"
-      className="grid gap-10 pt-8 pb-14 sm:pt-14 sm:pb-20 lg:grid-cols-[minmax(0,1fr)_340px] lg:items-end lg:gap-16"
+      className="grid gap-10 pt-8 pb-14 sm:pt-14 sm:pb-20 lg:grid-cols-[minmax(0,1fr)_minmax(0,380px)] lg:items-center lg:gap-16"
     >
       <div>
         <p className="mb-6 text-micro uppercase text-faint">
-          <span className="text-accent">●</span>&nbsp; uid=1000({site.alias})
-          <span className="px-1.5 text-line-strong">·</span>
-          {site.location.toLowerCase()}
-          <span className="px-1.5 text-line-strong">·</span>
-          {site.currently.toLowerCase()}
+          <span className="text-accent">●</span>&nbsp;{" "}
+          <DecodeText
+            text={`uid=1000(${site.alias}) · ${site.location.toLowerCase()} · ${site.currently.toLowerCase()}`}
+          />
         </p>
 
         <h1
@@ -42,7 +42,7 @@ export function Hero() {
         </div>
       </div>
 
-      <OnRotation />
+      <AsciiTorus />
     </section>
   );
 }
