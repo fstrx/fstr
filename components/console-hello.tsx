@@ -10,7 +10,7 @@ export function ConsoleHello() {
     if (greeted) return;
     greeted = true;
     console.log(
-      "%cvarad / fstr%c\n\nhey, you opened devtools. respect.\nwindow 7 is a live shell (try help), and the editors take :commands\n",
+      "%cvarad / fstr%c\n\nhey, you opened devtools. respect.\nwindow 7 is a live shell (try help), and the editors take :commands\npsst: :crt\n",
       "font: 500 14px ui-monospace, monospace; color: #d75b66",
       "font: 12px ui-monospace, monospace; color: inherit",
     );

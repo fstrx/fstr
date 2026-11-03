@@ -8,6 +8,7 @@ import { experience } from "@/content/experience";
 import { projects } from "@/content/projects";
 import { activeSocials, site } from "@/content/site";
 import type { WindowId } from "./active-file";
+import { crtCommand } from "./crt";
 import { files } from "./files";
 
 export type Line = { text: string; tone?: "muted" | "accent" | "green" | "fg"; href?: string };
@@ -186,6 +187,12 @@ export function run(input: string, history: string[]): Result {
       return { lines: [{ text: "you can't quit the internet. (closing the tab works though)", tone: "muted" }] };
     case "vi":
       return { lines: [{ text: "it's 2026. try nvim.", tone: "muted" }] };
+
+    // easter egg (unlisted). the one impure command: flips classes on <html>.
+    case "crt": {
+      const r = crtCommand(arg);
+      return { lines: [{ text: r.text, tone: r.error ? "accent" : "muted" }] };
+    }
 
     default:
       return { lines: [{ text: `zsh: command not found: ${cmd}`, tone: "accent" }, { text: "type help for a list.", tone: "muted" }] };

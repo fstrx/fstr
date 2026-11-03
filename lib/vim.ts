@@ -5,6 +5,7 @@
 
 import { site } from "@/content/site";
 import { openWindow } from "./active-file";
+import { crtCommand } from "./crt";
 import { files } from "./files";
 import { setTheme, toggleTheme } from "./theme";
 
@@ -47,7 +48,12 @@ export function runCommand(raw: string, ctx: { setLine: (n: number) => void }): 
         return { text: `theme: ${arg}` };
       }
       return { text: `theme: ${toggleTheme()}` };
+    // easter egg: deliberately not listed in :help
+    case "crt":
+      return crtCommand(arg);
     case "set":
+      if (arg === "crt") return crtCommand("on");
+      if (arg === "nocrt") return crtCommand("off");
       if (/^(bg|background)=(light|dark)$/.test(arg)) {
         const t = arg.split("=")[1] as "light" | "dark";
         setTheme(t);
