@@ -22,7 +22,14 @@ Everything personal lives in `content/` — components never need touching for u
 | `content/now.ts`        | the /now snapshot — edit list, bump `updated`                  |
 | `content/listening.ts`  | "on rotation" records                                          |
 
-The editor's `.ts` files are generated from these (`lib/files.ts`), so code and the terminal output never drift apart.
+## Layout
+
+The site is a tmux-style workspace (`components/workspace.tsx`). The bottom bar is the nav;
+one window is visible at a time and the active one lives in the URL hash (`#projects`, `#shell`…).
+Each file window is split: generated source on the left (`lib/files.ts`), its render on the
+right (`components/renders.tsx`), both built from the same `/content` data so they never drift.
+On small screens the split becomes a `render | code` toggle. Window 7 is a live shell
+(`lib/shell.ts`). All windows are server-rendered and hidden, so every section is in the HTML.
 
 Colours are CSS variables at the top of `app/globals.css` (dark + light).
 
@@ -45,4 +52,4 @@ No domain is hardcoded. Once you have one, set `NEXT_PUBLIC_SITE_URL` (see `.env
 
 ## Keyboard
 
-`1`–`6` open file · `[` `]` cycle · `j` `k` move line (editor focused) · `:` command line (`:help`).
+`1`–`7` switch window · `[` `]` cycle · `j` `k` move line (code pane focused) · `:` vim command line (`:help`) · window 7: type `help`.

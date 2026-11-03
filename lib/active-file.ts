@@ -1,18 +1,23 @@
 /**
- * The currently open file lives in the URL hash (#projects, #now…) so
- * links are shareable and back/forward just works. This is a tiny external
- * store around it for useSyncExternalStore.
+ * The active tmux "window" lives in the URL hash (#projects, #shell…) so
+ * links are shareable and back/forward just works. Windows = the editor
+ * files + a full-width shell.
  */
 
 import { useSyncExternalStore } from "react";
 import { FILE_IDS, isFileId, type FileId } from "./files";
 
-const listeners = new Set<() => void>();
-const DEFAULT: FileId = "about";
+export const WINDOW_IDS = [...FILE_IDS, "shell"] as const;
+export type WindowId = (typeof WINDOW_IDS)[number];
 
-function read(): FileId {
+export const isWindowId = (v: string): v is WindowId => (WINDOW_IDS as readonly string[]).includes(v);
+
+const listeners = new Set<() => void>();
+const DEFAULT: WindowId = "about";
+
+function read(): WindowId {
   const h = window.location.hash.slice(1);
-  return isFileId(h) ? h : DEFAULT;
+  return isWindowId(h) ? h : DEFAULT;
 }
 
 function subscribe(cb: () => void) {
@@ -26,7 +31,7 @@ function subscribe(cb: () => void) {
   };
 }
 
-export function useActiveFile() {
+export function useActiveWindow() {
   return useSyncExternalStore(subscribe, read, () => DEFAULT);
 }
 
@@ -34,23 +39,21 @@ export function prefersReducedMotion() {
   return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 }
 
-export function scrollToEditor() {
-  document.getElementById("editor")?.scrollIntoView({
-    behavior: prefersReducedMotion() ? "auto" : "smooth",
-    block: "start",
-  });
+export function openWindow(id: WindowId) {
+  if (read() === id) return;
+  // pushState (not location.hash) so the browser doesn't jump-scroll
+  window.history.pushState(null, "", `#${id}`);
+  listeners.forEach((l) => l());
 }
 
-export function openFile(id: FileId, opts: { scroll?: boolean } = {}) {
-  if (read() !== id) {
-    // pushState (not location.hash) so the browser doesn't jump-scroll
-    window.history.pushState(null, "", `#${id}`);
-    listeners.forEach((l) => l());
-  }
-  if (opts.scroll) scrollToEditor();
+/** kept for callers that think in files (shell `cat`, vim `:e`) */
+export function openFile(id: FileId) {
+  openWindow(id);
 }
 
-export function stepFile(delta: 1 | -1) {
-  const i = FILE_IDS.indexOf(read());
-  openFile(FILE_IDS[(i + delta + FILE_IDS.length) % FILE_IDS.length]);
+export function stepWindow(delta: 1 | -1) {
+  const i = WINDOW_IDS.indexOf(read());
+  openWindow(WINDOW_IDS[(i + delta + WINDOW_IDS.length) % WINDOW_IDS.length]);
 }
+
+export { isFileId };

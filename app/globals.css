@@ -82,7 +82,6 @@
 html {
   background: var(--bg);
   -webkit-text-size-adjust: 100%;
-  scrollbar-gutter: stable;
 }
 
 body {
@@ -100,6 +99,13 @@ body {
 :focus-visible {
   outline: 1px solid var(--accent);
   outline-offset: 2px;
+}
+
+/* while dragging the pane splitter */
+.is-resizing,
+.is-resizing * {
+  cursor: col-resize !important;
+  user-select: none !important;
 }
 
 /* thin, quiet scrollbars inside editor panes */

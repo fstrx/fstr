@@ -1,22 +1,43 @@
 import { ConsoleHello } from "@/components/console-hello";
-import { Editor } from "@/components/editor/editor";
-import { Elsewhere } from "@/components/elsewhere";
-import { Hero } from "@/components/hero";
-import { ProjectsIndex } from "@/components/projects-index";
-import { SiteFooter } from "@/components/site-footer";
+import {
+  AboutRender,
+  ExperienceRender,
+  InterestsRender,
+  NowRender,
+  ProjectsRender,
+  SecurityRender,
+} from "@/components/renders";
 import { SiteHeader } from "@/components/site-header";
+import { LastLogin } from "@/components/term/last-login";
+import { Shell } from "@/components/term/shell";
+import { TmuxBar } from "@/components/term/tmux-bar";
+import { Workspace } from "@/components/workspace";
 
 export default function Home() {
   return (
-    <div className="mx-auto w-full max-w-[1160px] px-4 sm:px-6">
+    <div className="flex h-dvh flex-col overflow-hidden">
       <SiteHeader />
-      <main id="main">
-        <Hero />
-        <ProjectsIndex />
-        <Editor />
-        <Elsewhere />
+      <main id="main" className="flex min-h-0 flex-1 flex-col">
+        <Workspace
+          renders={{
+            about: <AboutRender />,
+            projects: <ProjectsRender />,
+            experience: <ExperienceRender />,
+            interests: <InterestsRender />,
+            now: <NowRender />,
+            security: <SecurityRender />,
+          }}
+          shell={
+            <>
+              <LastLogin />
+              <div className="mt-4">
+                <Shell />
+              </div>
+            </>
+          }
+        />
       </main>
-      <SiteFooter />
+      <TmuxBar />
       <ConsoleHello />
     </div>
   );

@@ -1,6 +1,7 @@
 import { ArrowUpRight } from "lucide-react";
 import { projects, type Project } from "@/content/projects";
 import { activeSocials } from "@/content/site";
+import { Prompt } from "./term/prompt";
 
 function hostLabel(url: string) {
   const u = new URL(url);
@@ -76,13 +77,14 @@ export function ProjectsIndex() {
   const github = activeSocials.find((s) => s.id === "github");
 
   return (
-    <section aria-labelledby="work-title" id="work" className="scroll-mt-6 pb-20 sm:pb-28">
+    <section aria-labelledby="work-title" id="work" className="">
       <div className="flex items-baseline justify-between border-b border-line pb-3">
-        <h2 id="work-title" className="text-[12.5px] text-faint">
-          <span className="text-accent">{"//"}</span> projects
+        <h2 id="work-title" className="sr-only">
+          projects
         </h2>
+        <Prompt cmd="ls -l ~/projects" />
         <span className="text-micro uppercase text-faint tabular-nums">
-          {String(projects.length).padStart(2, "0")} entries
+          total {projects.length}
         </span>
       </div>
 
