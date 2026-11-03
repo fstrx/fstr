@@ -9,6 +9,7 @@ import { projects } from "@/content/projects";
 import { activeSocials, site } from "@/content/site";
 import type { WindowId } from "./active-file";
 import { crtCommand } from "./crt";
+import { matrixCommand } from "./matrix";
 import { files } from "./files";
 
 export type Line = { text: string; tone?: "muted" | "accent" | "green" | "fg"; href?: string };
@@ -188,7 +189,11 @@ export function run(input: string, history: string[]): Result {
     case "vi":
       return { lines: [{ text: "it's 2026. try nvim.", tone: "muted" }] };
 
-    // easter egg (unlisted). the one impure command: flips classes on <html>.
+    // easter eggs (unlisted). impure on purpose: they touch the DOM directly.
+    case "matrix":
+    case "cmatrix":
+      return { lines: [{ text: matrixCommand().text, tone: "green" }] };
+
     case "crt": {
       const r = crtCommand(arg);
       return { lines: [{ text: r.text, tone: r.error ? "accent" : "muted" }] };

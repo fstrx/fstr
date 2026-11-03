@@ -6,6 +6,7 @@
 import { site } from "@/content/site";
 import { openWindow } from "./active-file";
 import { crtCommand } from "./crt";
+import { matrixCommand } from "./matrix";
 import { files } from "./files";
 import { setTheme, toggleTheme } from "./theme";
 
@@ -51,6 +52,9 @@ export function runCommand(raw: string, ctx: { setLine: (n: number) => void }): 
     // easter egg: deliberately not listed in :help
     case "crt":
       return crtCommand(arg);
+    case "matrix":
+    case "cmatrix":
+      return matrixCommand();
     case "set":
       if (arg === "crt") return crtCommand("on");
       if (arg === "nocrt") return crtCommand("off");
