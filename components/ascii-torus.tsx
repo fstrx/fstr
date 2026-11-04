@@ -120,7 +120,7 @@ export function AsciiTorus() {
   }, []);
 
   return (
-    <figure className="relative border border-line" aria-label="an ascii torus, slowly rotating">
+    <figure className="chamfer relative border border-line bg-surface/40" aria-label="an ascii torus, slowly rotating">
       <div className="flex items-center justify-between border-b border-line px-4 py-2.5 text-micro uppercase">
         <span className="text-muted">fig. 0</span>
         <span className="text-faint">torus · r=1 R=2</span>
@@ -129,7 +129,7 @@ export function AsciiTorus() {
       <pre
         ref={preRef}
         aria-hidden
-        className="drafting overflow-hidden px-3 py-4 text-center text-[7.5px] leading-[1.15] text-muted select-none sm:text-[9px] lg:text-[8.5px] xl:text-[9.5px]"
+        className="drafting overflow-hidden px-3 py-4 text-center text-[7.5px] leading-[1.15] text-blue/75 select-none sm:text-[9px] lg:text-[8.5px] xl:text-[9.5px]"
       >
         {/* SSR placeholder keeps the box from collapsing before hydration */}
         {(" ".repeat(COLS) + "\n").repeat(ROWS)}

@@ -24,9 +24,10 @@ export function TmuxBar() {
   return (
     <nav
       aria-label="sections"
-      className="flex h-7 shrink-0 items-stretch border-t border-line bg-raised text-[11.5px]"
+      className="relative flex h-7 shrink-0 items-stretch border-t border-line bg-raised text-[11.5px]"
     >
-      <span className="flex items-center bg-accent px-2.5 font-medium text-bg">[{site.alias}]</span>
+      <span aria-hidden className="neon-rule pointer-events-none absolute inset-x-0 -top-px h-px" />
+      <span className="slant-r flex items-center bg-accent pr-4 pl-2.5 font-medium text-bg">[{site.alias}]</span>
 
       <ul className="scroll-quiet flex min-w-0 flex-1 items-stretch overflow-x-auto [scrollbar-width:none]">
         {WINDOW_IDS.map((id, i) => {
@@ -40,12 +41,12 @@ export function TmuxBar() {
                   openWindow(id);
                 }}
                 aria-current={current ? "true" : undefined}
-                className={`flex items-center px-2.5 whitespace-nowrap transition-colors ${
-                  current ? "bg-fg/[0.07] text-fg" : "text-muted hover:text-fg"
+                className={`aberrate flex items-center px-2.5 whitespace-nowrap transition-colors ${
+                  current ? "bg-fg/[0.07] text-fg shadow-[inset_0_-1px_0_var(--accent)]" : "text-muted hover:text-fg"
                 }`}
               >
                 {i + 1}:{id}
-                <span className={current ? "text-accent" : "invisible"}>*</span>
+                <span className={current ? "neon-text text-accent" : "invisible"}>*</span>
               </a>
             </li>
           );

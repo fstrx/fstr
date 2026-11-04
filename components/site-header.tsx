@@ -15,7 +15,8 @@ export function Wordmark() {
 /** section nav lives in the tmux bar at the bottom */
 export function SiteHeader() {
   return (
-    <header className="flex h-11 shrink-0 items-center gap-x-6 border-b border-line px-4">
+    <header className="relative flex h-11 shrink-0 items-center gap-x-6 border-b border-line px-4">
+      <span aria-hidden className="neon-rule pointer-events-none absolute inset-x-0 -bottom-px h-px" />
       <Link href="/" aria-label="varad / fstr — home" className="mr-auto">
         <Wordmark />
       </Link>

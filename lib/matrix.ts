@@ -23,9 +23,9 @@ export function startMatrix(): boolean {
   const lightPaper = root.dataset.theme === "light" && !root.classList.contains("crt");
   const color = (name: string, fallback: string) =>
     lightPaper ? fallback : css.getPropertyValue(name).trim() || fallback;
-  const bg = color("--bg", "#0c0b0a");
-  const rain = color("--green", "#93b585");
-  const head = color("--fg", "#e7e1d3");
+  const bg = color("--bg", "#0a0a0d");
+  const rain = color("--green", "#5ff2c4");
+  const head = color("--fg", "#e6e3dc");
   const family = getComputedStyle(document.body).fontFamily;
   const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 

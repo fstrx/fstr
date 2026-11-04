@@ -50,7 +50,7 @@ export function Prompt({ cmd, path = "~", className = "" }: { cmd: string; path?
   return (
     <p className={`text-[12.5px] leading-[1.7] ${className}`}>
       <span className="text-green">{site.handle}</span> <span className="text-faint">{path}</span>{" "}
-      <span className="text-accent">›</span>{" "}
+      <span className="neon-text text-accent">›</span>{" "}
       <span ref={ref} className="text-fg">
         {cmd}
       </span>

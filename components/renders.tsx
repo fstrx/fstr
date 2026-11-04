@@ -34,7 +34,7 @@ function Links() {
               href={s.href}
               target={s.id === "email" ? undefined : "_blank"}
               rel="me noopener noreferrer"
-              className="group flex items-baseline gap-4 py-3 text-[13px]"
+              className="group aberrate flex items-baseline gap-4 py-3 text-[13px]"
             >
               <span className="w-20 text-muted transition-colors group-hover:text-fg">{s.label}</span>
               <span className="min-w-0 flex-1 truncate text-fg">{s.handle}</span>
@@ -62,7 +62,10 @@ export function AboutRender() {
             text={`uid=1000(${site.alias}) · ${site.location.toLowerCase()} · ${site.currently.toLowerCase()}`}
           />
         </p>
-        <h1 className="font-serif text-[44px] leading-[1] tracking-[-0.01em] text-fg sm:text-[60px]">
+        <h1
+          data-text="hi, i'm varad."
+          className="glitch font-serif text-[44px] leading-[1] tracking-[-0.01em] text-fg sm:text-[60px]"
+        >
           hi, i&apos;m varad<span className="text-accent">.</span>
           <span
             aria-hidden

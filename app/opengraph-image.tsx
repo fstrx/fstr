@@ -6,13 +6,13 @@ export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
 const C = {
-  bg: "#0c0b0a",
-  fg: "#e7e1d3",
-  muted: "#8d877b",
-  faint: "#57534c",
-  line: "#24221f",
-  accent: "#d75b66",
-  green: "#93b585",
+  bg: "#0a0a0d",
+  fg: "#e6e3dc",
+  muted: "#8a8893",
+  faint: "#52505c",
+  line: "#1e1d26",
+  accent: "#ff3e6c",
+  green: "#5ff2c4",
 };
 
 export default function OpengraphImage() {

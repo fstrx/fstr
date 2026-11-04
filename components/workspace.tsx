@@ -198,6 +198,7 @@ function FileWindow({
   children: React.ReactNode;
 }) {
   const symbol = [...OUTLINES[file.id]].reverse().find((s) => s.line <= cursorLine);
+  const hexId = `0x${(files.indexOf(file) + 1).toString(16).padStart(2, "0")}`;
   const runner = file.lang === "ts" ? "bun run" : "cat";
 
   return (
@@ -221,7 +222,13 @@ function FileWindow({
       <div className="grid min-h-0 flex-1 lg:grid-cols-[minmax(0,var(--split))_1px_minmax(0,1fr)]">
         {/* code */}
         <div className={`min-h-0 min-w-0 flex-col lg:flex ${view === "code" ? "flex" : "hidden"}`}>
-          <PaneHeader right={<span className={file.lang === "ts" ? "text-blue" : "text-green"}>{file.lang}</span>}>
+          <PaneHeader
+            right={
+              <span>
+                <span className={file.lang === "ts" ? "text-blue" : "text-green"}>{file.lang}</span> · {hexId}
+              </span>
+            }
+          >
             <span className="text-muted">nvim</span>
             <span aria-hidden>·</span>
             <span>{site.alias}</span>
@@ -256,7 +263,7 @@ function FileWindow({
 
         {/* render */}
         <div className={`min-h-0 min-w-0 flex-col lg:flex ${view === "render" ? "flex" : "hidden"}`}>
-          <PaneHeader right="render">
+          <PaneHeader right={`render · ${hexId}`}>
             <span className="text-accent">›</span>
             <span className="text-muted">
               {runner} {file.path}
@@ -297,7 +304,7 @@ function StatusBar({
       className={`h-7 shrink-0 items-stretch border-t border-line bg-bg text-[11px] ${hideOnMobile ? "hidden lg:flex" : "flex"}`}
     >
       <span
-        className={`flex items-center px-3 text-[10px] font-medium tracking-[0.08em] text-bg ${
+        className={`neon-box relative z-[1] flex items-center px-3 text-[10px] font-medium tracking-[0.08em] text-bg ${
           inCommand ? "bg-green" : "bg-accent"
         }`}
       >
