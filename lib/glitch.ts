@@ -1,41 +1,50 @@
 /**
- * Page-wide glitch: a ~320ms twitch of the whole page (see `html.glitching`
- * in globals.css) plus a few random neon noise bars on top.
+ * Page-wide glitch: a short twitch of the whole page (see `html.glitching`
+ * / `html.glitching-loud` in globals.css) plus random neon noise bars.
+ *
+ * intensity 1 = ambient, 2 = a bit more, 3 = the jack-in reveal.
  */
 
-const DURATION = 320;
+type Intensity = 1 | 2 | 3;
+
+const DURATION: Record<Intensity, number> = { 1: 380, 2: 420, 3: 640 };
 let busy = false;
 
 export function reducedMotion() {
   return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 }
 
-export function glitch(intensity: 1 | 2 = 1) {
+export function glitch(intensity: Intensity = 1) {
   if (busy || reducedMotion()) return false;
   busy = true;
 
+  const loud = intensity === 3;
   const root = document.documentElement;
   const bars = document.createElement("div");
-  bars.className = "glitch-bars";
+  bars.className = loud ? "glitch-bars loud" : "glitch-bars";
   bars.setAttribute("aria-hidden", "true");
-  const n = 3 + Math.floor(Math.random() * 4) * intensity;
+
+  const n = loud ? 14 + Math.floor(Math.random() * 8) : 4 + Math.floor(Math.random() * 4) + (intensity - 1) * 3;
+  const maxH = loud ? 42 : 8 + intensity * 6;
+  const tones = loud ? ["a", "b", "c"] : ["a", "b"];
   for (let i = 0; i < n; i++) {
     const bar = document.createElement("span");
     bar.style.top = `${Math.random() * 100}%`;
-    bar.style.height = `${2 + Math.random() * (10 * intensity)}px`;
-    bar.style.left = `${Math.random() * 30}%`;
-    bar.style.right = `${Math.random() * 30}%`;
-    bar.style.animationDelay = `${Math.random() * 120}ms`;
-    bar.dataset.tone = Math.random() > 0.5 ? "a" : "b";
+    bar.style.height = `${2 + Math.random() * maxH}px`;
+    bar.style.left = `${Math.random() * (loud ? 15 : 30)}%`;
+    bar.style.right = `${Math.random() * (loud ? 15 : 30)}%`;
+    bar.style.animationDelay = `${Math.random() * (loud ? 260 : 120)}ms`;
+    bar.dataset.tone = tones[(Math.random() * tones.length) | 0];
     bars.append(bar);
   }
   document.body.append(bars);
-  root.classList.add("glitching");
+  const cls = loud ? "glitching-loud" : "glitching";
+  root.classList.add(cls);
 
   window.setTimeout(() => {
-    root.classList.remove("glitching");
+    root.classList.remove(cls);
     bars.remove();
     busy = false;
-  }, DURATION);
+  }, DURATION[intensity]);
   return true;
 }

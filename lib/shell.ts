@@ -193,7 +193,7 @@ export function run(input: string, history: string[]): Result {
     // easter eggs (unlisted). impure on purpose: they touch the DOM directly.
     case "glitch":
       return {
-        lines: [{ text: glitch(2) ? "s̷y̶s̴:: signal unstable" : "reduced motion is on, the signal stays clean", tone: "accent" }],
+        lines: [{ text: glitch(arg === "loud" ? 3 : 2) ? "s̷y̶s̴:: signal unstable" : "reduced motion is on, the signal stays clean", tone: "accent" }],
       };
 
     case "matrix":

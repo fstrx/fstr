@@ -246,37 +246,104 @@ html.booting::before {
   background: var(--bg);
 }
 
-/* overlay leaves by tearing into slices */
+/* overlay leaves by tearing into slices (loud) */
 .boot-out {
-  animation: boot-out 380ms steps(1) forwards;
+  animation: boot-out 520ms steps(1) forwards;
 }
 @keyframes boot-out {
-  0% { clip-path: inset(0); transform: none; }
-  20% { clip-path: inset(0 0 52% 0); transform: translateX(-12px); }
-  40% { clip-path: inset(30% 0 22% 0); transform: translateX(16px); }
-  60% { clip-path: inset(62% 0 8% 0); transform: translateX(-8px); opacity: 0.8; }
-  80% { clip-path: inset(84% 0 4% 0); transform: translateX(6px); opacity: 0.5; }
+  0% { clip-path: inset(0); transform: none; filter: none; }
+  12% {
+    clip-path: inset(0 0 58% 0);
+    transform: translateX(-38px) skewX(-6deg);
+    filter: drop-shadow(8px 0 rgb(255 62 108 / 0.9)) drop-shadow(-8px 0 rgb(90 209 255 / 0.9));
+  }
+  /* no invert here: the page reveal already has the one invert frame (keep flashes ≤ 1) */
+  24% { clip-path: inset(22% 0 30% 0); transform: translateX(46px); filter: hue-rotate(180deg) saturate(2); }
+  36% { clip-path: inset(48% 0 12% 0); transform: translateX(-28px) skewX(4deg); filter: hue-rotate(90deg) saturate(2); }
+  50% { clip-path: inset(8% 0 70% 0); transform: translateX(30px); filter: drop-shadow(6px 0 rgb(255 62 108 / 0.8)); opacity: 0.85; }
+  64% { clip-path: inset(66% 0 6% 0); transform: translateX(-18px); opacity: 0.7; }
+  80% { clip-path: inset(86% 0 2% 0); transform: translateX(12px); opacity: 0.45; }
   100% { clip-path: inset(100% 0 0 0); opacity: 0; }
 }
 
+/* ACCESS GRANTED moment: the whole boot screen shakes + splits */
+.boot-shake {
+  animation: boot-shake 140ms steps(1) infinite;
+}
+@keyframes boot-shake {
+  0% { transform: translate(0); filter: none; }
+  25% {
+    transform: translate(-5px, 2px);
+    filter: drop-shadow(4px 0 rgb(255 62 108 / 0.8)) drop-shadow(-4px 0 rgb(90 209 255 / 0.8));
+  }
+  50% { transform: translate(4px, -1px) skewX(-2deg); filter: hue-rotate(40deg); }
+  75% { transform: translate(-2px, 0); filter: drop-shadow(3px 0 rgb(90 209 255 / 0.7)); }
+}
+
+/* nonstop, heavier text glitch for ACCESS GRANTED */
+.glitch-loud::before {
+  animation: glitch-loud-a 0.45s steps(1) infinite;
+}
+.glitch-loud::after {
+  animation: glitch-loud-b 0.45s steps(1) infinite;
+}
+@keyframes glitch-loud-a {
+  0% { opacity: 0.9; transform: translate(-7px, 0); clip-path: inset(0 0 65% 0); }
+  25% { opacity: 0.8; transform: translate(5px, 1px); clip-path: inset(40% 0 30% 0); }
+  50% { opacity: 0; }
+  75% { opacity: 0.9; transform: translate(-4px, 0); clip-path: inset(70% 0 0 0); }
+}
+@keyframes glitch-loud-b {
+  0% { opacity: 0; }
+  20% { opacity: 0.9; transform: translate(8px, 0); clip-path: inset(55% 0 15% 0); }
+  45% { opacity: 0.8; transform: translate(-6px, -1px); clip-path: inset(10% 0 60% 0); }
+  70% { opacity: 0.9; transform: translate(4px, 0); clip-path: inset(30% 0 45% 0); }
+}
+
+/* random page glitch: a tad loud */
 html.glitching body {
-  animation: page-glitch 320ms steps(1) both;
+  animation: page-glitch 380ms steps(1) both;
 }
 @keyframes page-glitch {
   0% { transform: none; filter: none; }
-  12% {
-    transform: translate(-6px, 1px) skewX(-1.5deg);
-    filter: drop-shadow(3px 0 rgb(255 62 108 / 0.65)) drop-shadow(-3px 0 rgb(90 209 255 / 0.65));
+  10% {
+    transform: translate(-10px, 1px) skewX(-2.5deg);
+    filter: drop-shadow(4px 0 rgb(255 62 108 / 0.75)) drop-shadow(-4px 0 rgb(90 209 255 / 0.75));
   }
-  24% { transform: translate(5px, -1px); filter: hue-rotate(35deg) saturate(1.6); }
-  36% { transform: none; filter: none; clip-path: inset(18% 0 46% 0); }
-  48% {
-    transform: translate(-3px, 0);
+  20% { transform: translate(8px, -1px); filter: hue-rotate(45deg) saturate(1.8); }
+  30% { transform: none; filter: none; clip-path: inset(16% 0 48% 0); }
+  40% {
+    transform: translate(-5px, 0);
     clip-path: none;
-    filter: drop-shadow(2px 0 rgb(255 62 108 / 0.6)) drop-shadow(-2px 0 rgb(90 209 255 / 0.6));
+    filter: drop-shadow(3px 0 rgb(255 62 108 / 0.7)) drop-shadow(-3px 0 rgb(90 209 255 / 0.7));
   }
-  64% { transform: translate(2px, 0) skewX(0.8deg); filter: none; }
-  80% { transform: translate(-1px, 0); filter: contrast(1.3); }
+  52% { transform: translate(6px, 0) skewX(1.5deg); clip-path: inset(58% 0 20% 0); filter: contrast(1.4); }
+  66% { transform: translate(-2px, 0); clip-path: none; filter: none; }
+  80% { transform: translate(2px, 0); filter: contrast(1.3) brightness(1.15); }
+  100% { transform: none; filter: none; clip-path: none; }
+}
+
+/* the reveal after jack-in: loud */
+html.glitching-loud body {
+  animation: page-glitch-loud 620ms steps(1) both;
+}
+@keyframes page-glitch-loud {
+  0% { transform: none; filter: none; }
+  8% {
+    transform: translate(-26px, 3px) skewX(-6deg);
+    filter: drop-shadow(7px 0 rgb(255 62 108 / 0.9)) drop-shadow(-7px 0 rgb(90 209 255 / 0.9));
+  }
+  16% { transform: translate(22px, -2px) scale(1.01); filter: invert(1) hue-rotate(180deg); }
+  24% { transform: none; clip-path: inset(10% 0 55% 0); filter: hue-rotate(90deg) saturate(2.2); }
+  32% { transform: translate(-14px, 0) skewX(4deg); clip-path: inset(45% 0 18% 0); filter: brightness(1.7); }
+  42% {
+    transform: translate(12px, 1px);
+    clip-path: none;
+    filter: drop-shadow(5px 0 rgb(255 62 108 / 0.85)) drop-shadow(-5px 0 rgb(90 209 255 / 0.85));
+  }
+  54% { transform: translate(-8px, 0); clip-path: inset(70% 0 6% 0); filter: contrast(1.6); }
+  66% { transform: translate(5px, 0) skewX(-1.5deg); clip-path: none; filter: hue-rotate(-30deg); }
+  80% { transform: translate(-2px, 0); filter: drop-shadow(2px 0 rgb(90 209 255 / 0.6)); }
   100% { transform: none; filter: none; clip-path: none; }
 }
 
@@ -290,13 +357,23 @@ html.glitching body {
   position: absolute;
   mix-blend-mode: screen;
   opacity: 0;
-  animation: glitch-bar 300ms steps(2) forwards;
+  animation: glitch-bar 340ms steps(2) forwards;
 }
-.glitch-bars > span[data-tone="a"] { background: color-mix(in srgb, var(--accent) 75%, transparent); }
-.glitch-bars > span[data-tone="b"] { background: color-mix(in srgb, var(--blue) 70%, transparent); }
+.glitch-bars.loud > span {
+  animation: glitch-bar-loud 560ms steps(3) forwards;
+}
+.glitch-bars > span[data-tone="a"] { background: color-mix(in srgb, var(--accent) 80%, transparent); }
+.glitch-bars > span[data-tone="b"] { background: color-mix(in srgb, var(--blue) 75%, transparent); }
+.glitch-bars > span[data-tone="c"] { background: color-mix(in srgb, var(--fg) 60%, transparent); }
 @keyframes glitch-bar {
-  0% { opacity: 0.9; transform: translateX(-20px); }
-  50% { opacity: 0.6; transform: translateX(24px); }
+  0% { opacity: 0.95; transform: translateX(-28px); }
+  50% { opacity: 0.65; transform: translateX(32px); }
+  100% { opacity: 0; transform: translateX(0); }
+}
+@keyframes glitch-bar-loud {
+  0% { opacity: 1; transform: translateX(-70px) scaleY(1.4); }
+  33% { opacity: 0.85; transform: translateX(60px); }
+  66% { opacity: 0.7; transform: translateX(-30px) scaleY(0.6); }
   100% { opacity: 0; transform: translateX(0); }
 }
 

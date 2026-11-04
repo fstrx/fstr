@@ -54,11 +54,11 @@ export function Boot() {
         step === 0 ? 220 : STEP_MS,
       );
     } else if (phase === "granted") {
-      t = window.setTimeout(() => setPhase("out"), 520);
+      t = window.setTimeout(() => setPhase("out"), 650);
     } else {
       markBooted();
-      glitch(2);
-      t = window.setTimeout(() => setActive(false), 380);
+      glitch(3);
+      t = window.setTimeout(() => setActive(false), 540);
     }
     return () => window.clearTimeout(t);
   }, [active, phase, step]);
@@ -85,7 +85,9 @@ export function Boot() {
     <div
       role="status"
       aria-label="loading"
-      className={`boot fixed inset-0 z-[310] flex items-center justify-center bg-bg px-6 ${phase === "out" ? "boot-out" : ""}`}
+      className={`boot fixed inset-0 z-[310] flex items-center justify-center bg-bg px-6 ${
+        phase === "out" ? "boot-out" : phase === "granted" ? "boot-shake" : ""
+      }`}
     >
       <div className="w-full max-w-[560px] text-[12.5px] leading-[1.9]">
         <div className="mb-6 flex items-center justify-between border-b border-line pb-2 text-micro uppercase">
@@ -120,7 +122,7 @@ export function Boot() {
         <p
           data-text="ACCESS GRANTED"
           className={`glitch mt-6 text-[22px] tracking-[0.3em] text-accent neon-text transition-opacity duration-150 ${
-            phase === "log" ? "opacity-0" : "opacity-100"
+            phase === "log" ? "opacity-0" : "glitch-loud opacity-100"
           }`}
         >
           ACCESS GRANTED

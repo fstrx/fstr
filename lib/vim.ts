@@ -57,7 +57,7 @@ export function runCommand(raw: string, ctx: { setLine: (n: number) => void }): 
     case "cmatrix":
       return matrixCommand();
     case "glitch":
-      return glitch(2) ? { text: "s̷y̶s̴:: signal unstable" } : { text: "glitch: reduced motion is on, the signal stays clean" };
+      return glitch(arg === "loud" ? 3 : 2) ? { text: "s̷y̶s̴:: signal unstable" } : { text: "glitch: reduced motion is on, the signal stays clean" };
     case "set":
       if (arg === "crt") return crtCommand("on");
       if (arg === "nocrt") return crtCommand("off");
