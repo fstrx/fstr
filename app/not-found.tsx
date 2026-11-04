@@ -71,7 +71,7 @@ export default function NotFound() {
           </div>
         </div>
 
-        <p className="mt-6 font-sans text-[14px] text-muted">
+        <p className="mt-6 text-[13px] text-muted">
           probably a typo, a dead link, or something i moved. the homepage is a safe bet.
         </p>
       </main>

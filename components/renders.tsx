@@ -72,7 +72,7 @@ export function AboutRender() {
             className="ml-2 inline-block h-[0.68em] w-[0.3em] translate-y-[0.04em] animate-blink bg-fg/55"
           />
         </h1>
-        <div className="mt-8 max-w-[58ch] space-y-4 font-sans text-[15px] leading-[1.7] text-muted">
+        <div className="mt-8 max-w-[58ch] space-y-4 text-[13.5px] leading-[1.8] text-muted">
           <p>
             i&apos;m a <span className="text-fg">student, developer, and founder</span>, mostly into{" "}
             <span className="text-fg">systems and security</span>: how things are engineered,
@@ -130,7 +130,7 @@ export function ExperienceRender() {
                   {r.where && <span className="text-faint"> · {r.where}</span>}
                 </p>
                 {r.about && (
-                  <p className="mt-3 max-w-[60ch] font-sans text-[14.5px] leading-relaxed text-muted">{r.about}</p>
+                  <p className="mt-3 max-w-[60ch] text-[13px] leading-[1.75] text-muted">{r.about}</p>
                 )}
               </div>
             </li>
@@ -150,11 +150,11 @@ export function InterestsRender() {
           {interests.map((g, i) => (
             <div key={g.verb} className="grid gap-x-6 gap-y-1 py-4 sm:grid-cols-[8rem_minmax(0,1fr)]">
               <dt className={`text-[12.5px] ${i < 2 ? "text-accent" : "text-muted"}`}>{g.verb}</dt>
-              <dd className="font-sans text-[15px] text-fg">{g.items.join(", ")}</dd>
+              <dd className="text-[13.5px] text-fg">{g.items.join(", ")}</dd>
             </div>
           ))}
         </dl>
-        <p className="mt-4 font-sans text-[14px] text-muted">
+        <p className="mt-4 text-[12.5px] text-muted">
           the common thread is probably curiosity. also loud guitars.
         </p>
       </div>
@@ -170,7 +170,7 @@ export function NowRender() {
         <Prompt cmd="cat ~/now" className="mb-8" />
         <ul className="space-y-3">
           {now.items.map((item) => (
-            <li key={item} className="flex gap-4 font-sans text-[16px] text-fg">
+            <li key={item} className="flex gap-4 text-[14px] text-fg">
               <span aria-hidden className="font-mono text-accent">
                 →
               </span>
@@ -207,7 +207,7 @@ export function SecurityRender() {
     <div className="space-y-14">
       <div>
         <Prompt cmd="curl -s /.well-known/security.txt" className="mb-8" />
-        <p className="max-w-[58ch] font-sans text-[15px] leading-[1.7] text-muted">
+        <p className="max-w-[58ch] text-[13.5px] leading-[1.8] text-muted">
           found a vulnerability in this site or one of my projects? please report it privately before
           going public. i care about this stuff, and i&apos;d rather fix it than read about it.
         </p>
@@ -254,11 +254,11 @@ export function SecurityRender() {
 
       <div>
         <Heading>colophon</Heading>
-        <div className="max-w-[58ch] space-y-3 font-sans text-[14px] leading-[1.7] text-muted">
+        <div className="max-w-[58ch] space-y-3 text-[13px] leading-[1.8] text-muted">
           <p>
             built with next.js, typescript and tailwind, installed with bun. set in jetbrains mono,
-            geist, and instrument serif. mostly static: no analytics, no cookies, no third-party
-            scripts.
+            with instrument serif for the big stuff. mostly static: no analytics, no cookies, no
+            third-party scripts.
           </p>
           <p>
             the code on the left is generated from the same data as the render on the right, so they

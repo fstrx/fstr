@@ -57,7 +57,7 @@
   --color-amber: var(--amber);
   --color-blue: var(--blue);
 
-  --font-sans: var(--font-geist), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-jetbrains), ui-monospace, "SF Mono", Menlo, monospace; /* everything is mono */
   --font-mono: var(--font-jetbrains), ui-monospace, "SF Mono", Menlo, monospace;
   --font-serif: var(--font-instrument), ui-serif, Georgia, serif;
 
@@ -186,11 +186,11 @@ body {
 }
 .glitch::before {
   color: var(--blue);
-  animation: glitch-a 6s steps(1) infinite;
+  animation: glitch-a 4s steps(1) infinite;
 }
 .glitch::after {
   color: var(--accent);
-  animation: glitch-b 6s steps(1) infinite;
+  animation: glitch-b 4s steps(1) infinite;
 }
 .glitch:hover::before {
   animation-duration: 0.9s;
@@ -199,14 +199,17 @@ body {
   animation-duration: 0.9s;
 }
 @keyframes glitch-a {
-  0%, 90%, 100% { opacity: 0; transform: none; clip-path: inset(0); }
+  0%, 44%, 49%, 90%, 100% { opacity: 0; transform: none; clip-path: inset(0); }
+  45% { opacity: 0.6; transform: translate(-2px, 0); clip-path: inset(48% 0 30% 0); }
+  47% { opacity: 0.5; transform: translate(1px, 0); clip-path: inset(15% 0 70% 0); }
   91% { opacity: 0.8; transform: translate(-3px, 0); clip-path: inset(10% 0 62% 0); }
   93% { opacity: 0.8; transform: translate(2px, 0); clip-path: inset(55% 0 20% 0); }
   95% { opacity: 0.7; transform: translate(-2px, 0); clip-path: inset(30% 0 45% 0); }
   97% { opacity: 0; }
 }
 @keyframes glitch-b {
-  0%, 90%, 100% { opacity: 0; transform: none; clip-path: inset(0); }
+  0%, 44%, 49%, 90%, 100% { opacity: 0; transform: none; clip-path: inset(0); }
+  46% { opacity: 0.6; transform: translate(2px, 0); clip-path: inset(72% 0 8% 0); }
   92% { opacity: 0.8; transform: translate(3px, 0); clip-path: inset(68% 0 6% 0); }
   94% { opacity: 0.7; transform: translate(-2px, 0); clip-path: inset(18% 0 58% 0); }
   96% { opacity: 0.8; transform: translate(2px, 0); clip-path: inset(42% 0 34% 0); }

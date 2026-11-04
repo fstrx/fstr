@@ -29,7 +29,7 @@ function Row({ p, i }: { p: Project; i: number }) {
             </span>
           )}
         </div>
-        <p className="mt-3 max-w-[60ch] font-sans text-[14.5px] leading-relaxed text-muted">{p.about}</p>
+        <p className="mt-3 max-w-[60ch] text-[13px] leading-[1.75] text-muted">{p.about}</p>
         <p className="mt-2 text-[11px] text-faint">{p.tags.map((t) => `#${t.replace(/\s+/g, "-")}`).join("  ")}</p>
       </div>
 
