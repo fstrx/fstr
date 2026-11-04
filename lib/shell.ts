@@ -9,6 +9,7 @@ import { projects } from "@/content/projects";
 import { activeSocials, site } from "@/content/site";
 import type { WindowId } from "./active-file";
 import { crtCommand } from "./crt";
+import { glitch } from "./glitch";
 import { matrixCommand } from "./matrix";
 import { files } from "./files";
 
@@ -190,6 +191,11 @@ export function run(input: string, history: string[]): Result {
       return { lines: [{ text: "it's 2026. try nvim.", tone: "muted" }] };
 
     // easter eggs (unlisted). impure on purpose: they touch the DOM directly.
+    case "glitch":
+      return {
+        lines: [{ text: glitch(2) ? "s̷y̶s̴:: signal unstable" : "reduced motion is on, the signal stays clean", tone: "accent" }],
+      };
+
     case "matrix":
     case "cmatrix":
       return { lines: [{ text: matrixCommand().text, tone: "green" }] };

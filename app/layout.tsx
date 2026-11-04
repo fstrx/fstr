@@ -1,6 +1,9 @@
 import type { Metadata, Viewport } from "next";
 import { Instrument_Serif, JetBrains_Mono } from "next/font/google";
 import { site } from "@/content/site";
+import { Boot } from "@/components/boot";
+import { GlitchFX } from "@/components/glitch-fx";
+import { bootScript } from "@/lib/boot";
 import { DEFAULT_THEME, themeScript } from "@/lib/theme";
 import "./globals.css";
 
@@ -75,6 +78,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     >
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
+        <script dangerouslySetInnerHTML={{ __html: bootScript }} />
       </head>
       <body className="min-h-dvh">
         <a
@@ -84,6 +88,8 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           skip to content
         </a>
         {children}
+        <Boot />
+        <GlitchFX />
       </body>
     </html>
   );

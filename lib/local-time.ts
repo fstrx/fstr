@@ -20,7 +20,6 @@ const getServerSnapshot = () => "--:--";
 export function useLocalTime() {
   const time = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
   const hour = time === "--:--" ? null : Number(time.slice(0, 2));
-  const status =
-    hour === null ? "—" : hour < 7 ? "probably asleep" : hour < 9 ? "waking up" : "probably awake";
+  const status = "awake"; // always. sleep is a suggestion.
   return { time, hour, status };
 }
