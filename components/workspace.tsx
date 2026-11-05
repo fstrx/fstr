@@ -37,9 +37,16 @@ const initialCursors = () =>
 
 function PaneHeader({ children, right }: { children: React.ReactNode; right?: React.ReactNode }) {
   return (
-    <div className="flex h-8 shrink-0 items-center justify-between gap-3 border-b border-line px-4 text-[11px] whitespace-nowrap">
+    <div className="relative flex h-8 shrink-0 items-center justify-between gap-3 border-b border-line pr-3 pl-4 text-[11px] whitespace-nowrap">
+      {/* notch */}
+      <span aria-hidden className="absolute top-1/2 left-0 h-3.5 w-[3px] -translate-y-1/2 bg-accent" />
       <div className="flex min-w-0 items-center gap-1.5 overflow-hidden text-faint">{children}</div>
-      {right && <div className="shrink-0 text-micro uppercase text-faint">{right}</div>}
+      {right && (
+        <div className="flex shrink-0 items-center gap-2">
+          <span aria-hidden className="hatch-faint hidden h-2 w-10 sm:block" />
+          <span className="hud-label text-faint">{right}</span>
+        </div>
+      )}
     </div>
   );
 }
@@ -211,7 +218,7 @@ function FileWindow({
             type="button"
             aria-pressed={view === v}
             onClick={() => onView(v)}
-            className="relative px-4 text-muted aria-pressed:text-fg"
+            className="hud-label relative px-4 text-muted aria-pressed:text-yellow"
           >
             {view === v && <span aria-hidden className="absolute inset-x-0 top-0 h-px bg-accent" />}
             {v}
@@ -270,7 +277,8 @@ function FileWindow({
             </span>
           </PaneHeader>
           <div className="scroll-quiet min-h-0 flex-1 overflow-auto">
-            <div className="mx-auto max-w-[760px] px-4 py-8 sm:px-10 sm:py-12">{children}</div>
+            {/* @container: render layouts respond to the pane width, not the viewport */}
+            <div className="@container mx-auto max-w-[760px] px-4 py-8 sm:px-10 sm:py-12">{children}</div>
           </div>
         </div>
       </div>
@@ -304,7 +312,7 @@ function StatusBar({
       className={`h-7 shrink-0 items-stretch border-t border-line bg-bg text-[11px] ${hideOnMobile ? "hidden lg:flex" : "flex"}`}
     >
       <span
-        className={`neon-box relative z-[1] flex items-center px-3 text-[10px] font-medium tracking-[0.08em] text-bg ${
+        className={`neon-box hud-label slant-r relative z-[1] flex items-center pr-5 pl-3 text-bg ${
           inCommand ? "bg-green" : "bg-accent"
         }`}
       >

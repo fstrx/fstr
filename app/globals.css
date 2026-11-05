@@ -16,13 +16,15 @@
   --fg: #e6e3dc;
   --muted: #8a8893;
   --faint: #52505c;
-  --line: #1e1d26;
-  --line-strong: #2e2c3a;
+  --line: #261a21; /* red-tinted panel lines, like in-game UI */
+  --line-strong: #3d2531;
   --accent: #ff3e6c; /* hot pink-red */
+  --yellow: #f3e600; /* "selected" highlight */
   --green: #5ff2c4; /* neon mint: strings, prompts, links */
   --amber: #e9dc5c; /* cyber yellow: numbers */
   --blue: #5ad1ff; /* cyan: types, functions */
   --selection: rgb(255 62 108 / 0.3);
+  --glow: 1; /* NEON knob */
   color-scheme: dark;
 }
 
@@ -39,6 +41,7 @@
   --green: #0e7f60;
   --amber: #8a6d00;
   --blue: #0a6f9e;
+  --yellow: #8a7a00;
   --selection: rgb(200 29 80 / 0.16);
   color-scheme: light;
 }
@@ -56,10 +59,12 @@
   --color-green: var(--green);
   --color-amber: var(--amber);
   --color-blue: var(--blue);
+  --color-yellow: var(--yellow);
 
   --font-sans: var(--font-jetbrains), ui-monospace, "SF Mono", Menlo, monospace; /* everything is mono */
   --font-mono: var(--font-jetbrains), ui-monospace, "SF Mono", Menlo, monospace;
   --font-serif: var(--font-instrument), ui-serif, Georgia, serif;
+  --font-display: var(--font-chakra), var(--font-jetbrains), ui-monospace, monospace;
 
   --text-micro: 10.5px;
   --text-micro--letter-spacing: 0.09em;
@@ -145,11 +150,11 @@ body {
 /* neon glow for small accent surfaces (badges, active tab) */
 .neon-box {
   box-shadow:
-    0 0 12px color-mix(in srgb, var(--accent) 45%, transparent),
+    0 0 calc(12px * var(--glow, 1)) color-mix(in srgb, var(--accent) calc(45% * var(--glow, 1)), transparent),
     0 0 1px var(--accent);
 }
 .neon-text {
-  text-shadow: 0 0 8px color-mix(in srgb, currentColor 55%, transparent);
+  text-shadow: 0 0 calc(8px * var(--glow, 1)) color-mix(in srgb, currentColor calc(55% * min(var(--glow, 1), 1.6)), transparent);
 }
 
 /* gradient hairline: accent → cyan → nothing */
@@ -160,6 +165,78 @@ body {
     color-mix(in srgb, var(--blue) 70%, transparent) 35%,
     transparent 85%
   );
+}
+
+/* ── HUD kit ───────────────────────────────────────────── */
+
+/* condensed uppercase interface labels */
+.hud-label {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 10.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+/* corner brackets, no extra DOM: 8 tiny gradient strokes */
+.hud-corners {
+  --hc: color-mix(in srgb, var(--accent) 75%, transparent);
+  --hs: 9px;
+  background:
+    linear-gradient(var(--hc) 0 0) 0 0 / var(--hs) 1px,
+    linear-gradient(var(--hc) 0 0) 0 0 / 1px var(--hs),
+    linear-gradient(var(--hc) 0 0) 100% 0 / var(--hs) 1px,
+    linear-gradient(var(--hc) 0 0) 100% 0 / 1px var(--hs),
+    linear-gradient(var(--hc) 0 0) 0 100% / var(--hs) 1px,
+    linear-gradient(var(--hc) 0 0) 0 100% / 1px var(--hs),
+    linear-gradient(var(--hc) 0 0) 100% 100% / var(--hs) 1px,
+    linear-gradient(var(--hc) 0 0) 100% 100% / 1px var(--hs);
+  background-repeat: no-repeat;
+}
+
+/* diagonal hazard hatching */
+.hatch {
+  background-image: repeating-linear-gradient(
+    -45deg,
+    color-mix(in srgb, var(--accent) 38%, transparent) 0 2px,
+    transparent 2px 6px
+  );
+}
+.hatch-faint {
+  background-image: repeating-linear-gradient(
+    -45deg,
+    color-mix(in srgb, var(--accent) 12%, transparent) 0 1px,
+    transparent 1px 7px
+  );
+}
+
+/* segmented bar: <div class="seg"><i></i>…</div>, .on lights a segment */
+.seg {
+  display: flex;
+  gap: 2px;
+}
+.seg > i {
+  flex: 1;
+  height: 6px;
+  background: var(--line-strong);
+  transform: skewX(-20deg);
+}
+.seg > i.on {
+  background: var(--accent);
+  box-shadow: 0 0 calc(6px * var(--glow, 1)) color-mix(in srgb, var(--accent) 60%, transparent);
+}
+/* indeterminate: a lit run sweeping across */
+.seg.run > i {
+  animation: seg-run 1.6s steps(1) infinite;
+}
+/* with steps(1) each keyframe's value holds until the next one, so "off" needs explicit stops on both sides */
+@keyframes seg-run {
+  0%, 5%, 19%, 100% { background: var(--line-strong); box-shadow: none; }
+  6%, 18% { background: var(--accent); box-shadow: 0 0 calc(6px * var(--glow, 1)) color-mix(in srgb, var(--accent) 60%, transparent); }
+}
+
+.chamfer-sm {
+  clip-path: polygon(6px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%, 0 6px);
 }
 
 /* HUD cut corners */
@@ -448,6 +525,7 @@ html.crt-green {
   --green: #8dffa8;
   --amber: #b5ffc5;
   --blue: #6ee891;
+  --yellow: #d9ffe2;
   --selection: rgb(141 255 168 / 0.25);
   color-scheme: dark;
 }
@@ -464,6 +542,7 @@ html.crt-amber {
   --green: #ffcf70;
   --amber: #ffbf4d;
   --blue: #f0a838;
+  --yellow: #fff0c8;
   --selection: rgb(255 191 77 / 0.25);
   color-scheme: dark;
 }

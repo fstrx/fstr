@@ -7,6 +7,7 @@ import { site } from "@/content/site";
 import { openWindow } from "./active-file";
 import { crtCommand } from "./crt";
 import { glitch } from "./glitch";
+import { hudOpen } from "./hud";
 import { matrixCommand } from "./matrix";
 import { files } from "./files";
 import { setTheme, toggleTheme } from "./theme";
@@ -56,6 +57,11 @@ export function runCommand(raw: string, ctx: { setLine: (n: number) => void }): 
     case "matrix":
     case "cmatrix":
       return matrixCommand();
+    case "hud": {
+      const next = arg === "on" ? true : arg === "off" ? false : !hudOpen.get();
+      hudOpen.set(next);
+      return { text: `hud: ${next ? "on" : "off"}${next ? " (wide screens)" : ""}` };
+    }
     case "glitch":
       return glitch(arg === "loud" ? 3 : 2) ? { text: "s̷y̶s̴:: signal unstable" } : { text: "glitch: reduced motion is on, the signal stays clean" };
     case "set":

@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Instrument_Serif, JetBrains_Mono } from "next/font/google";
+import { Chakra_Petch, Instrument_Serif, JetBrains_Mono } from "next/font/google";
 import { site } from "@/content/site";
 import { Boot } from "@/components/boot";
 import { GlitchFX } from "@/components/glitch-fx";
@@ -7,6 +7,12 @@ import { bootScript } from "@/lib/boot";
 import { DEFAULT_THEME, themeScript } from "@/lib/theme";
 import "./globals.css";
 
+// HUD labels only (uppercase, condensed): the in-game interface feel
+const chakra = Chakra_Petch({
+  variable: "--font-chakra",
+  subsets: ["latin"],
+  weight: ["500", "600"],
+});
 const jetbrains = JetBrains_Mono({
   variable: "--font-jetbrains",
   subsets: ["latin"],
@@ -74,7 +80,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       lang="en"
       data-theme={DEFAULT_THEME}
       suppressHydrationWarning
-      className={`${jetbrains.variable} ${instrument.variable} antialiased`}
+      className={`${jetbrains.variable} ${instrument.variable} ${chakra.variable} antialiased`}
     >
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />

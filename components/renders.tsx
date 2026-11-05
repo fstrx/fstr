@@ -17,8 +17,10 @@ import { Prompt } from "./term/prompt";
 
 function Heading({ children }: { children: React.ReactNode }) {
   return (
-    <h2 className="mb-5 text-[12.5px] text-faint">
-      <span className="text-accent">{"//"}</span> {children}
+    <h2 className="mb-5 flex items-center gap-2">
+      <span aria-hidden className="h-3 w-[3px] bg-accent" />
+      <span className="hud-label text-fg">{children}</span>
+      <span aria-hidden className="hatch-faint h-2 flex-1" />
     </h2>
   );
 }
@@ -64,7 +66,7 @@ export function AboutRender() {
         </p>
         <h1
           data-text="hi, i'm varad."
-          className="glitch font-serif text-[44px] leading-[1] tracking-[-0.01em] text-fg sm:text-[60px]"
+          className="glitch font-serif text-[44px] leading-[1] tracking-[-0.01em] text-fg @md:text-[60px]"
         >
           hi, i&apos;m varad<span className="text-accent">.</span>
           <span
@@ -87,7 +89,7 @@ export function AboutRender() {
         </div>
       </div>
 
-      <div className="grid items-start gap-12 2xl:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)]">
+      <div className="grid items-start gap-12 @2xl:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)]">
         <AsciiTorus />
         <Links />
       </div>
@@ -115,13 +117,13 @@ export function ExperienceRender() {
           return (
             <li key={`${r.org}-${r.from}`} className="grid grid-cols-[1.75rem_minmax(0,1fr)]">
               <div aria-hidden className="flex flex-col items-center">
-                <span className={`text-[14px] leading-[1.6] ${current ? "text-accent" : "text-faint"}`}>
-                  {current ? "●" : "○"}
+                <span className={`text-[13px] leading-[1.7] ${current ? "neon-text text-accent" : "text-faint"}`}>
+                  {current ? "◆" : "◇"}
                 </span>
                 {!last && <span className="w-px flex-1 bg-line-strong" />}
               </div>
               <div className={last ? "" : "pb-9"}>
-                <h3 className="font-serif text-[26px] leading-tight text-fg sm:text-[30px]">{r.org}</h3>
+                <h3 className="font-serif text-[26px] leading-tight text-fg @md:text-[30px]">{r.org}</h3>
                 <p className="mt-1 text-[13px] text-fg">{r.role.toLowerCase()}</p>
                 <p className="mt-1 text-[11.5px] text-muted tabular-nums">
                   <span className={current ? "text-accent" : ""}>
@@ -148,7 +150,7 @@ export function InterestsRender() {
         <Prompt cmd="ls ~/interests" className="mb-8" />
         <dl className="divide-y divide-line border-y border-line">
           {interests.map((g, i) => (
-            <div key={g.verb} className="grid gap-x-6 gap-y-1 py-4 sm:grid-cols-[8rem_minmax(0,1fr)]">
+            <div key={g.verb} className="grid gap-x-6 gap-y-1 py-4 @md:grid-cols-[8rem_minmax(0,1fr)]">
               <dt className={`text-[12.5px] ${i < 2 ? "text-accent" : "text-muted"}`}>{g.verb}</dt>
               <dd className="text-[13.5px] text-fg">{g.items.join(", ")}</dd>
             </div>
@@ -195,7 +197,7 @@ export function NowRender() {
 
 function Row({ label, children }: { label: string; children: React.ReactNode }) {
   return (
-    <div className="grid gap-x-6 gap-y-1 border-t border-line py-3 sm:grid-cols-[8rem_minmax(0,1fr)]">
+    <div className="grid gap-x-6 gap-y-1 border-t border-line py-3 @md:grid-cols-[8rem_minmax(0,1fr)]">
       <dt className="text-[12.5px] text-muted">{label}</dt>
       <dd className="text-[13px] text-fg">{children}</dd>
     </div>

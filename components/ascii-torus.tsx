@@ -120,8 +120,8 @@ export function AsciiTorus() {
   }, []);
 
   return (
-    <figure className="chamfer relative border border-line bg-surface/40" aria-label="an ascii torus, slowly rotating">
-      <div className="flex items-center justify-between border-b border-line px-4 py-2.5 text-micro uppercase">
+    <figure className="chamfer hud-corners relative border border-line" aria-label="an ascii torus, slowly rotating">
+      <div className="flex items-center justify-between border-b border-line px-4 py-2.5 hud-label">
         <span className="text-muted">fig. 0</span>
         <span className="text-faint">torus · r=1 R=2</span>
       </div>
@@ -135,7 +135,7 @@ export function AsciiTorus() {
         {(" ".repeat(COLS) + "\n").repeat(ROWS)}
       </pre>
 
-      <figcaption className="flex items-center justify-between border-t border-line px-4 py-2 text-micro uppercase text-faint">
+      <figcaption className="flex items-center justify-between border-t border-line px-4 py-2 hud-label text-faint">
         <span ref={readoutRef} className="tabular-nums" suppressHydrationWarning>
           a=0.90 b=0.40
         </span>

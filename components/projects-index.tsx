@@ -19,7 +19,7 @@ function Row({ p, i }: { p: Project; i: number }) {
 
       <div className="min-w-0">
         <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
-          <h3 className="font-serif text-[30px] leading-none tracking-[-0.01em] text-fg sm:text-[34px]">
+          <h3 className="font-serif text-[30px] leading-none tracking-[-0.01em] text-fg @md:text-[34px]">
             {p.name}
           </h3>
           {p.status && (
@@ -33,7 +33,7 @@ function Row({ p, i }: { p: Project; i: number }) {
         <p className="mt-2 text-[11px] text-faint">{p.tags.map((t) => `#${t.replace(/\s+/g, "-")}`).join("  ")}</p>
       </div>
 
-      <div className="col-start-2 flex items-baseline justify-between gap-4 text-[12px] sm:col-start-auto sm:flex-col sm:items-end sm:pt-[0.55em]">
+      <div className="col-start-2 flex items-baseline justify-between gap-4 text-[12px] @xl:col-start-auto @xl:flex-col @xl:items-end @xl:pt-[0.55em]">
         <span className="text-muted">{meta || " "}</span>
         {p.link ? (
           <span className="inline-flex items-center gap-1 text-green transition-colors group-hover:text-fg">
@@ -52,7 +52,7 @@ function Row({ p, i }: { p: Project; i: number }) {
   );
 
   const grid =
-    "group grid grid-cols-[2.25rem_minmax(0,1fr)] gap-x-4 gap-y-4 py-7 sm:grid-cols-[3rem_minmax(0,1fr)_11rem] sm:gap-x-6";
+    "group grid grid-cols-[2.25rem_minmax(0,1fr)] gap-x-4 gap-y-4 py-7 @xl:grid-cols-[3rem_minmax(0,1fr)_11rem] @xl:gap-x-6";
 
   return (
     <li className="border-b border-line">
@@ -83,7 +83,7 @@ export function ProjectsIndex() {
           projects
         </h2>
         <Prompt cmd="ls -l ~/projects" />
-        <span className="text-micro uppercase text-faint tabular-nums">
+        <span className="hud-label text-faint tabular-nums">
           total {projects.length}
         </span>
       </div>

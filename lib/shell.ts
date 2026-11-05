@@ -10,6 +10,7 @@ import { activeSocials, site } from "@/content/site";
 import type { WindowId } from "./active-file";
 import { crtCommand } from "./crt";
 import { glitch } from "./glitch";
+import { hudOpen } from "./hud";
 import { matrixCommand } from "./matrix";
 import { files } from "./files";
 
@@ -191,6 +192,12 @@ export function run(input: string, history: string[]): Result {
       return { lines: [{ text: "it's 2026. try nvim.", tone: "muted" }] };
 
     // easter eggs (unlisted). impure on purpose: they touch the DOM directly.
+    case "hud": {
+      const next = arg === "on" ? true : arg === "off" ? false : !hudOpen.get();
+      hudOpen.set(next);
+      return { lines: [{ text: `hud: ${next ? "on" : "off"}`, tone: "muted" }] };
+    }
+
     case "glitch":
       return {
         lines: [{ text: glitch(arg === "loud" ? 3 : 2) ? "s̷y̶s̴:: signal unstable" : "reduced motion is on, the signal stays clean", tone: "accent" }],

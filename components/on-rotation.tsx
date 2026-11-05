@@ -18,10 +18,10 @@ function Equalizer() {
 export function OnRotation() {
   return (
     <div>
-      <h2 id="rotation-title" className="mb-5 flex items-center justify-between text-[12.5px] text-faint">
-        <span>
-          <span className="text-accent">{"//"}</span> on rotation
-        </span>
+      <h2 id="rotation-title" className="mb-5 flex items-center gap-2">
+        <span aria-hidden className="h-3 w-[3px] bg-accent" />
+        <span className="hud-label text-fg">on rotation</span>
+        <span aria-hidden className="hatch-faint h-2 flex-1" />
         <Equalizer />
       </h2>
       <ol aria-labelledby="rotation-title" className="divide-y divide-line border-y border-line">

@@ -17,7 +17,7 @@ function Cell({ label, children }: { label: string; children: React.ReactNode })
 export function NowStatus() {
   const { time, status } = useLocalTime();
   return (
-    <dl className="grid grid-cols-2 gap-x-6 gap-y-5 sm:grid-cols-3">
+    <dl className="grid grid-cols-2 gap-x-6 gap-y-5 @md:grid-cols-3">
       <Cell label="location">
         <span className="text-fg">{site.location.toLowerCase()}</span>
       </Cell>

@@ -27,7 +27,7 @@ export function TmuxBar() {
       className="relative flex h-7 shrink-0 items-stretch border-t border-line bg-raised text-[11.5px]"
     >
       <span aria-hidden className="neon-rule pointer-events-none absolute inset-x-0 -top-px h-px" />
-      <span className="slant-r flex items-center bg-accent pr-4 pl-2.5 font-medium text-bg">[{site.alias}]</span>
+      <span className="hud-label slant-r flex items-center bg-accent pr-5 pl-3 text-bg">{site.alias}</span>
 
       <ul className="scroll-quiet flex min-w-0 flex-1 items-stretch overflow-x-auto [scrollbar-width:none]">
         {WINDOW_IDS.map((id, i) => {
@@ -41,19 +41,23 @@ export function TmuxBar() {
                   openWindow(id);
                 }}
                 aria-current={current ? "true" : undefined}
-                className={`aberrate flex items-center px-2.5 whitespace-nowrap transition-colors ${
-                  current ? "bg-fg/[0.07] text-fg shadow-[inset_0_-1px_0_var(--accent)]" : "text-muted hover:text-fg"
+                className={`aberrate hud-label flex items-center gap-1 px-3 whitespace-nowrap transition-colors ${
+                  current
+                    ? "bg-yellow/[0.08] text-yellow shadow-[inset_0_-2px_0_var(--yellow)] neon-text"
+                    : "text-muted hover:text-fg"
                 }`}
               >
-                {i + 1}:{id}
-                <span className={current ? "neon-text text-accent" : "invisible"}>*</span>
+                <span className={current ? "text-yellow" : "text-faint"}>{String(i + 1).padStart(2, "0")}</span>
+                {id}
+                <span className={current ? "text-accent" : "invisible"}>◆</span>
               </a>
             </li>
           );
         })}
       </ul>
 
-      <span className="hidden items-center gap-3 px-3 text-muted tabular-nums sm:flex">
+      <span className="hud-label hidden items-center gap-3 px-3 text-muted tabular-nums sm:flex">
+        <span aria-hidden className="hatch-faint h-2 w-10" />
         <span>&quot;{site.location.split(",")[0].toLowerCase()}&quot;</span>
         <span suppressHydrationWarning className="text-fg">
           {time}
