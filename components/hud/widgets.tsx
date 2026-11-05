@@ -169,10 +169,11 @@ export function Scope() {
     // grid
     ctx.strokeStyle = tk.line;
     ctx.lineWidth = 1;
-    for (let x = 0; x <= w; x += w / 8) {
+    for (let i = 0; i <= 8; i++) {
+      const x = Math.round((i / 8) * w) + 0.5;
       ctx.beginPath();
-      ctx.moveTo(Math.round(x) + 0.5, 0);
-      ctx.lineTo(Math.round(x) + 0.5, h);
+      ctx.moveTo(x, 0);
+      ctx.lineTo(x, h);
       ctx.stroke();
     }
     ctx.beginPath();

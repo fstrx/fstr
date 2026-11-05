@@ -1,6 +1,7 @@
 import { ArrowUpRight } from "lucide-react";
 import { projects, type Project } from "@/content/projects";
 import { activeSocials } from "@/content/site";
+import { Badge, Chip, code, Shard } from "./cp";
 import { Prompt } from "./term/prompt";
 
 function hostLabel(url: string) {
@@ -8,36 +9,39 @@ function hostLabel(url: string) {
   return u.hostname === "github.com" ? "source" : u.hostname.replace(/^www\./, "");
 }
 
-function Row({ p, i }: { p: Project; i: number }) {
+/** one project as an in-game "gig" card */
+function Gig({ p, i }: { p: Project; i: number }) {
+  const isRepo = p.link?.includes("github.com");
   const meta = [p.role?.toLowerCase(), p.lang].filter(Boolean).join(" · ");
 
-  const body = (
-    <>
-      <span className="pt-[0.55em] text-[11px] text-faint tabular-nums transition-colors group-hover:text-accent">
-        {String(i + 1).padStart(2, "0")}
-      </span>
-
-      <div className="min-w-0">
-        <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
-          <h3 className="font-serif text-[30px] leading-none tracking-[-0.01em] text-fg @md:text-[34px]">
-            {p.name}
-          </h3>
-          {p.status && (
-            <span className="inline-flex items-center gap-1.5 text-micro uppercase text-accent">
-              <span aria-hidden className="size-1.5 bg-accent motion-safe:animate-blink" />
-              {p.status}
-            </span>
-          )}
+  const card = (
+    <Shard
+      as="article"
+      tone={p.status ? "accent" : "line"}
+      className={p.link ? "group-hover:bg-accent/80 group-focus-visible:bg-accent" : ""}
+      title={code("GIG", i + 1)}
+      badge={
+        p.status ? (
+          <Badge solid pulse>
+            {p.status}
+          </Badge>
+        ) : isRepo ? (
+          <Badge tone="blue">public src</Badge>
+        ) : undefined
+      }
+      code={meta || undefined}
+    >
+      <h3 className="font-serif text-[30px] leading-none tracking-[-0.01em] text-fg @md:text-[34px]">{p.name}</h3>
+      <p className="mt-3 max-w-[60ch] text-[13px] leading-[1.75] text-muted">{p.about}</p>
+      <div className="mt-4 flex flex-wrap items-center justify-between gap-3">
+        <div className="flex flex-wrap gap-2">
+          {p.tags.map((t) => (
+            <Chip key={t}>#{t.replace(/\s+/g, "-")}</Chip>
+          ))}
         </div>
-        <p className="mt-3 max-w-[60ch] text-[13px] leading-[1.75] text-muted">{p.about}</p>
-        <p className="mt-2 text-[11px] text-faint">{p.tags.map((t) => `#${t.replace(/\s+/g, "-")}`).join("  ")}</p>
-      </div>
-
-      <div className="col-start-2 flex items-baseline justify-between gap-4 text-[12px] @xl:col-start-auto @xl:flex-col @xl:items-end @xl:pt-[0.55em]">
-        <span className="text-muted">{meta || " "}</span>
         {p.link ? (
-          <span className="inline-flex items-center gap-1 text-green transition-colors group-hover:text-fg">
-            {hostLabel(p.link)}
+          <span className="hud-label chamfer-sm inline-flex items-center gap-1.5 border border-green/50 px-2.5 py-1 text-green transition-colors group-hover:border-green group-hover:bg-green/10">
+            access · {hostLabel(p.link)}
             <ArrowUpRight
               className="size-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
               strokeWidth={1.5}
@@ -45,28 +49,26 @@ function Row({ p, i }: { p: Project; i: number }) {
             />
           </span>
         ) : (
-          <span className="text-faint">no public link</span>
+          <span className="hud-label text-faint">no public link</span>
         )}
       </div>
-    </>
+    </Shard>
   );
 
-  const grid =
-    "group grid grid-cols-[2.25rem_minmax(0,1fr)] gap-x-4 gap-y-4 py-7 @xl:grid-cols-[3rem_minmax(0,1fr)_11rem] @xl:gap-x-6";
-
   return (
-    <li className="border-b border-line">
+    <li>
       {p.link ? (
         <a
           href={p.link}
           target="_blank"
           rel="noopener noreferrer"
-          className={`${grid} -mx-3 px-3 transition-colors hover:bg-fg/[0.025]`}
+          aria-label={`${p.name} — ${hostLabel(p.link)}`}
+          className="group block outline-none"
         >
-          {body}
+          {card}
         </a>
       ) : (
-        <div className={`${grid} -mx-3 px-3`}>{body}</div>
+        card
       )}
     </li>
   );
@@ -77,25 +79,23 @@ export function ProjectsIndex() {
   const github = activeSocials.find((s) => s.id === "github");
 
   return (
-    <section aria-labelledby="work-title" id="work" className="">
-      <div className="flex items-baseline justify-between border-b border-line pb-3">
+    <section aria-labelledby="work-title" id="work">
+      <div className="flex items-baseline justify-between">
         <h2 id="work-title" className="sr-only">
           projects
         </h2>
         <Prompt cmd="ls -l ~/projects" />
-        <span className="hud-label text-faint tabular-nums">
-          total {projects.length}
-        </span>
+        <span className="hud-label text-faint tabular-nums">{projects.length} gigs</span>
       </div>
 
-      <ol>
+      <ol className="mt-6 space-y-5">
         {projects.map((p, i) => (
-          <Row key={p.name} p={p} i={i} />
+          <Gig key={p.name} p={p} i={i} />
         ))}
       </ol>
 
       {github && (
-        <p className="mt-5 text-[12px] text-faint">
+        <p className="mt-6 text-[12px] text-faint">
           more experiments + configs (dwm, nvim, dotfiles) on{" "}
           <a href={github.href} target="_blank" rel="noopener noreferrer" className="link">
             github.com/{github.handle}

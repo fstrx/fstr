@@ -32,15 +32,24 @@ export function useCanvasLoop(
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
       return { w: width, h: height };
     };
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     let size = fit();
+
+    // never draw into a zero-size canvas (e.g. the rail is display:none on small
+    // screens): draw code that steps by w/n would otherwise loop forever.
+    const frame = (t: number) => {
+      if (size.w < 2 || size.h < 2) return;
+      drawRef.current(ctx, size.w, size.h, t / 1000);
+    };
+
+    // resizing clears the canvas; under reduced motion, redraw the still frame
     const ro = new ResizeObserver(() => {
       size = fit();
+      if (reduced) frame(1.7);
     });
     ro.observe(canvas);
 
-    const frame = (t: number) => drawRef.current(ctx, size.w, size.h, t / 1000);
-
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    if (reduced) {
       frame(1.7);
       return () => ro.disconnect();
     }

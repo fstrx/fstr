@@ -1,4 +1,5 @@
 import { listening } from "@/content/listening";
+import { Badge, code, Shard } from "./cp";
 
 function Equalizer() {
   return (
@@ -14,29 +15,31 @@ function Equalizer() {
   );
 }
 
-/** "currently listening to" — sits in the elsewhere row */
+/** "currently listening to", as an audio log */
 export function OnRotation() {
   return (
-    <div>
-      <h2 id="rotation-title" className="mb-5 flex items-center gap-2">
-        <span aria-hidden className="h-3 w-[3px] bg-accent" />
-        <span className="hud-label text-fg">on rotation</span>
-        <span aria-hidden className="hatch-faint h-2 flex-1" />
-        <Equalizer />
-      </h2>
-      <ol aria-labelledby="rotation-title" className="divide-y divide-line border-y border-line">
+    <Shard
+      title="audio log · on rotation"
+      code={<Equalizer />}
+      badge={<Badge tone="accent">rec</Badge>}
+      bodyClassName="p-0"
+    >
+      <ol>
         {listening.map((t, i) => (
-          <li key={t.album} className="flex items-baseline gap-4 py-3 text-[13px]">
-            <span className="w-4 text-[10px] text-faint tabular-nums">{String(i + 1).padStart(2, "0")}</span>
-            <span className="min-w-0 flex-1 truncate">
+          <li
+            key={t.album}
+            className="grid grid-cols-[3rem_minmax(0,1fr)_auto] items-baseline gap-3 border-b border-line px-4 py-3 text-[13px] last:border-b-0"
+          >
+            <span className="hud-label text-faint">{code("TRK", i + 1)}</span>
+            <span className="min-w-0 truncate">
               <span className="text-fg">{t.artist.toLowerCase()}</span>
               <span className="text-faint"> — </span>
               <span className="text-muted">{t.album.toLowerCase()}</span>
             </span>
-            <span className="text-[11px] text-accent tabular-nums">{t.year}</span>
+            <span className="hud-label text-yellow tabular-nums">{t.year}</span>
           </li>
         ))}
       </ol>
-    </div>
+    </Shard>
   );
 }
